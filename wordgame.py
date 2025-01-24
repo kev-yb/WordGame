@@ -21,23 +21,41 @@ cast -> set('c', 'a', 's', 't')
 
 '''
 import random
-# dictionary = {"face", "cast", "tree", "tool"}
-# target = dictionary[0]
 
 class WordGame:
     def __init__(self, dictionary):
         self.dictionary = dictionary
-        self.target = random.sample(self.dictionary, 1)
+        self.target = random.sample(sorted(self.dictionary), 1)[0]
         self.targetCharSet = set(self.target)
+    
+    def check(self, userGuess: str) -> str:
+        res = []
+        for i in range(len(userGuess)):
+            if userGuess[i] in self.targetCharSet:
+                if userGuess[i] == self.target[i]:
+                    res.append("1")
+                else:
+                    res.append("0")
+            else:
+                res.append("-")
+        return "".join(res)
 
-def main():
+
+def main(debug=False):
     correctAnswer = False
     guessCount = 5
+    dictionary = {"face", "cast", "tree", "tool"}
     game = WordGame(dictionary)
 
+    debugTarget = ""
+
+    if debug == True:
+        debugTarget = game.target
+        print(debugTarget)
+
     while guessCount != 0:
-        userGuess = input("What is your guess?")
-        checkResult = userGuess.check()
+        userGuess = input("What is your guess? (Must be 4 characters): ")
+        checkResult = game.check(userGuess)
         if checkResult == "1111":
             print("Correct Guess!")
             return
@@ -47,7 +65,7 @@ def main():
     print("You used all attempts")
     return
 
-main()
+main(True)
 
 
 
