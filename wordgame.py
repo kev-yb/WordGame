@@ -18,7 +18,6 @@ Assumptions:
 3) char not in word
 
 cast -> set('c', 'a', 's', 't')
-
 '''
 import random
 
@@ -41,12 +40,17 @@ class WordGame:
         return "".join(res)
 
 
-def main(debug=False):
-    correctAnswer = False
-    guessCount = 5
-    dictionary = {"face", "cast", "tree", "tool"}
-    game = WordGame(dictionary)
+def main(debug=False, mode="easy"):
+    dictionaryUniverse = {
+        "easy": set(["abe", "inu" ,"lin", "pow"]),
+        "medium": set(["asdf", "oais", "qwer", "pkmi"]),
+        "hard": set(["asdfas", "asdfas", "asdfas"])
+    }
 
+    dictionary = dictionaryUniverse[mode]
+    wordLen = random.choice(dictionary)
+
+    game = WordGame(dictionary)
     debugTarget = ""
 
     if debug == True:
@@ -54,7 +58,10 @@ def main(debug=False):
         print(debugTarget)
 
     while guessCount != 0:
-        userGuess = input("What is your guess? (Must be 4 characters): ")
+        userGuess = input(f"What is your guess? (Must be {wordLen} characters): ")
+        if len(userGuess) != wordLen:
+            print("wrong character limit")
+            continue
         checkResult = game.check(userGuess)
         if checkResult == "1111":
             print("Correct Guess!")
