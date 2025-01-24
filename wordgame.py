@@ -19,9 +19,6 @@ Assumptions:
 
 cast -> set('c', 'a', 's', 't')
 
-cash
-
-
 '''
 import random
 # dictionary = {"face", "cast", "tree", "tool"}
@@ -32,8 +29,25 @@ class WordGame:
         self.dictionary = dictionary
         self.target = random.sample(self.dictionary, 1)
         self.targetCharSet = set(self.target)
-    
 
+def main():
+    correctAnswer = False
+    guessCount = 5
+    game = WordGame(dictionary)
+
+    while guessCount != 0:
+        userGuess = input("What is your guess?")
+        checkResult = userGuess.check()
+        if checkResult == "1111":
+            print("Correct Guess!")
+            return
+        print(checkResult)
+        guessCount -= 1
+
+    print("You used all attempts")
+    return
+
+main()
 
 
 
